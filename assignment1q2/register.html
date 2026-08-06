@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+<body>
+    <form action="subjects.html" method="get" target="mainFrame">
+        <center>
+        <table border="1" cellpadding="14" cellspacing="6" width="810">
+            <thead>
+                <th colspan="2"><h2>Registration Details</h2></th>
+            </thead>
+            <tr>
+                <tr>
+                    <th>Attributes</th>
+                    <th>Fill the form</th>
+                </tr>
+            </tr>
+
+            <tbody>
+                <tr>
+                    <td><b>Full Name</b></td>
+                    <td><input type="text" name="fullname" size="30" required></td>
+                </tr>
+                <tr>
+                    <td><b>Date of Birth</b></td>
+                    <td><input type="date" name="dob" required></td>
+                </tr>
+                <tr>
+                    <td><b>Gender</b></td>
+                    <td>
+                    <input type="radio" name="gender" value="Male" checked> Male
+                    <input type="radio" name="gender" value="Female"> Female
+                    <input type="radio" name="gender" value="Other"> Other
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Branch</b></td>
+                    <td>
+                        <select name="branch">
+                            <option>Computer Science &amp; Engineering</option>
+                            <option>Information Technology</option>
+                            <option>Electronics &amp; Communication</option>
+                            <option>Civil Engineering</option>
+                            <option>Electrical Engineering</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>Current Semester</b></td>
+                    <td>
+                        <select name="semester">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>Roll Number</b></td>
+                    <td><input type="text" name="roll"></td>
+                </tr>
+
+                <tr>
+                    <td><b>Email Address</b></td>
+                    <td><input type="email" name="email" required></td>
+                </tr>
+
+                <tr>
+                    <td><b>Contact Number</b></td>
+                    <td><input type="tel" name="phone"></td>
+                </tr>
+
+                <tr>
+                    <td valign="top"><b>Address</b></td>
+                    <td><textarea name="address" rows="3" cols="30"></textarea></td>
+                </tr>
+
+                <tr>
+                    <td><b>Upload Photograph</b></td>
+                    <td><input type="file" name="photo" accept="image/*"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Submit and Enter Question Bank">
+                        <input type="reset" value="Clear Form">
+                    </td>
+                </tr>
+            </tbody>
+
+            <!-- <tfoot>
+                <tr>
+                    <td></td>
+                    <td>100</td>
+                </tr>
+            </tfoot> -->
+
+        </table>   
+        </center>
+        </form>
+    </body>
+</html>
