@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;      /* was: height + overflow:hidden, which clips content
+                                taller than the viewport and disables scrolling
+                                entirely — risky the moment content grows */
+    padding: 60px 20px;     /* less padding on narrow screens */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f9;    /* body was uncolored; container now has something to sit on */
+    color: #222;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;       /* width:80% alone gets absurdly wide on large monitors */
+    width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    text-align: center;
+    color: #003366;
+    font-size: clamp(28px, 5vw, 50px);  /* scales down on small screens instead
+                                            of overflowing or wrapping badly */
+    letter-spacing: 1px;                /* 2px at 50px starts to look loose */
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #1565C0;
+    border-left: 6px solid #2196F3;
+    padding-left: 15px;
+    margin: 30px 0 12px;   /* h2 had no spacing from surrounding elements */
+}
+
+h3 {
+    background: #FFF3CD;
+    color: #6c5700;
+    padding: 18px;
+    border-radius: 10px;
+    text-align: left;      /* justify on narrow columns creates ugly rivers
+                               of whitespace between words — left reads better */
+    font-weight: normal;   /* h3 defaults to bold, which fights the soft,
+                               paragraph-like background block you've styled it as */
+    margin-bottom: 16px;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    background: #F8D7DA;
+    color: #721C24;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 28px;
+    }
+}

@@ -1,0 +1,263 @@
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: #eef1f5;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 40px 16px;
+  }
+
+  /* ---- hidden radio inputs, must precede .window in the DOM ---- */
+  .theme-radio{
+    position:absolute;
+    opacity:0;
+    width:1px;
+    height:1px;
+    pointer-events:none;
+  }
+
+  /* ---- theme swatch picker ---- */
+  .theme-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:28px;
+    background:#ffffff;
+    border:1px solid #dadce0;
+    padding:10px 16px;
+    border-radius:8px;
+    color:#202124;
+    font-size:13px;
+  }
+  .theme-bar span.label{ color:#5f6368; margin-right:4px; }
+
+  .swatch{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    cursor:pointer;
+    display:inline-block;
+    border:2px solid transparent;
+  }
+  .swatch[for="theme-light"]{ background: linear-gradient(135deg,#fff 50%, #4285f4 50%); }
+  .swatch[for="theme-dark"]{ background: linear-gradient(135deg,#202124 50%, #8ab4f8 50%); }
+  .swatch[for="theme-slate"]{ background: linear-gradient(135deg,#1f2937 50%, #38bdf8 50%); }
+  .swatch[for="theme-sepia"]{ background: linear-gradient(135deg,#f4ecd8 50%, #b06f2c 50%); }
+  .swatch[for="theme-forest"]{ background: linear-gradient(135deg,#f1f7f2 50%, #2e8b57 50%); }
+
+  /* highlight the swatch whose radio is checked, using the general sibling combinator */
+  #theme-light:checked  ~ .theme-bar .swatch[for="theme-light"],
+  #theme-dark:checked   ~ .theme-bar .swatch[for="theme-dark"],
+  #theme-slate:checked  ~ .theme-bar .swatch[for="theme-slate"],
+  #theme-sepia:checked  ~ .theme-bar .swatch[for="theme-sepia"],
+  #theme-forest:checked ~ .theme-bar .swatch[for="theme-forest"]{
+    border-color:#202124;
+  }
+  .theme-radio:focus-visible ~ .theme-bar label[for="theme-light"],
+  .theme-radio:focus-visible ~ .theme-bar label[for="theme-dark"]{
+    outline: 2px solid #4285f4;
+  }
+
+  /* ---- the dialog window, default (light) theme values ---- */
+  .window{
+    --bg:      #ffffff;
+    --border:  #dadce0;
+    --text:    #202124;
+    --label:   #5f6368;
+    --accent:  #4285f4;
+    --accent-text: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #dadce0;
+    --btn2-bg: #f1f3f4;
+    --btn2-text: #3c4043;
+
+    width: 480px;
+    max-width: 92vw;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    color: var(--text);
+  }
+
+  /* ---- theme overrides: radio:checked ~ .window { --var: value; } ---- */
+  #theme-dark:checked ~ .window{
+    --bg:      #202124;
+    --border:  #494c50;
+    --text:    #e8eaed;
+    --label:   #9aa0a6;
+    --accent:  #8ab4f8;
+    --accent-text: #202124;
+    --input-bg: #3c4043;
+    --input-border: #5f6368;
+    --btn2-bg: #3c4043;
+    --btn2-text: #e8eaed;
+  }
+
+  #theme-slate:checked ~ .window{
+    --bg:      #24303f;
+    --border:  #3a4a5e;
+    --text:    #e5edf5;
+    --label:   #93a5b8;
+    --accent:  #38bdf8;
+    --accent-text: #0b1220;
+    --input-bg: #1a2432;
+    --input-border: #3a4a5e;
+    --btn2-bg: #2f3d4e;
+    --btn2-text: #dce6f0;
+  }
+
+  #theme-sepia:checked ~ .window{
+    --bg:      #fbf3e2;
+    --border:  #d9c9a3;
+    --text:    #4a3d2b;
+    --label:   #8a7455;
+    --accent:  #b06f2c;
+    --accent-text: #ffffff;
+    --input-bg: #fffaf0;
+    --input-border: #d9c9a3;
+    --btn2-bg: #ecdfc4;
+    --btn2-text: #4a3d2b;
+  }
+
+  #theme-forest:checked ~ .window{
+    --bg:      #ffffff;
+    --border:  #cfe3d3;
+    --text:    #1e3b25;
+    --label:   #4c7357;
+    --accent:  #2e8b57;
+    --accent-text: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #cfe3d3;
+    --btn2-bg: #e6f2e8;
+    --btn2-text: #245536;
+  }
+
+  /* ---- dialog contents, all colours drawn from the custom properties above ---- */
+  .dialog-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 16px 20px 8px 20px;
+  }
+  .dialog-header h2{
+    margin:0;
+    font-size:15px;
+    font-weight:600;
+    color: var(--text);
+  }
+  .close-btn{
+    background:none;
+    border:none;
+    color: var(--label);
+    font-size:16px;
+    cursor:pointer;
+    line-height:1;
+    padding:4px;
+  }
+
+  .dialog-body{
+    padding: 4px 20px 12px 20px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .field-group{ margin-bottom:18px; }
+  .field-label{
+    font-size:12px;
+    font-weight:700;
+    color: var(--text);
+    margin-bottom:8px;
+    display:block;
+  }
+  .field-label .unit{
+    font-weight:400;
+    color: var(--label);
+    font-size:11px;
+  }
+
+  .radio-row{ display:flex; gap:18px; align-items:center; }
+  .radio-row label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    cursor:pointer;
+    color: var(--text);
+  }
+  .radio-row input[type="radio"]{ accent-color: var(--accent); }
+
+  select{
+    width:100%;
+    padding:8px 10px;
+    font-size:13px;
+    border:1px solid var(--input-border);
+    border-radius:4px;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+
+  .color-swatch-btn{
+    width:34px;
+    height:26px;
+    border:1px solid var(--input-border);
+    border-radius:4px;
+    background: var(--input-bg);
+    cursor:pointer;
+  }
+
+  .margin-row{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .margin-row label{ width:48px; font-size:13px; color: var(--text); flex-shrink:0; }
+  .margin-row input[type="text"]{
+    flex:1;
+    padding:8px 10px;
+    font-size:13px;
+    border:1px solid var(--input-border);
+    border-radius:4px;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+
+  .dialog-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 16px 20px 20px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .footer-left{ display:flex; gap:10px; }
+
+  button.primary{
+    background: var(--accent);
+    color: var(--accent-text);
+    border:none;
+    padding: 9px 20px;
+    border-radius:4px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  button.secondary{
+    background: var(--btn2-bg);
+    color: var(--btn2-text);
+    border:none;
+    padding: 9px 20px;
+    border-radius:4px;
+    font-size:13px;
+    cursor:pointer;
+  }
+  button.link-btn{
+    background:none;
+    border:none;
+    color: var(--accent);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }

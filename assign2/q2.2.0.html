@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Page Setup</title>
+<link rel="stylesheet" href="q2.2.0.css">
+</head>
+<body>
+
+  <!-- Radio inputs come first in the DOM so ~ can reach every later sibling -->
+  <input type="radio" name="theme" id="theme-light"  class="theme-radio" checked>
+  <input type="radio" name="theme" id="theme-dark"   class="theme-radio">
+  <input type="radio" name="theme" id="theme-slate"  class="theme-radio">
+  <input type="radio" name="theme" id="theme-sepia"  class="theme-radio">
+  <input type="radio" name="theme" id="theme-forest" class="theme-radio">
+
+  <div class="theme-bar">
+    <span class="label">Theme</span>
+    <label class="swatch" for="theme-light"  title="Light"></label>
+    <label class="swatch" for="theme-dark"   title="Dark"></label>
+    <label class="swatch" for="theme-slate"  title="Slate"></label>
+    <label class="swatch" for="theme-sepia"  title="Sepia"></label>
+    <label class="swatch" for="theme-forest" title="Forest"></label>
+  </div>
+
+  <div class="window">
+    <div class="dialog-header">
+      <h2>Page Setup</h2>
+      <button class="close-btn" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="dialog-body">
+      <div>
+        <div class="field-group">
+          <span class="field-label">Orientation</span>
+          <div class="radio-row">
+            <label><input type="radio" name="orientation" checked> Portrait</label>
+            <label><input type="radio" name="orientation"> Landscape</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">Paper Size</span>
+          <select>
+            <option>Letter (21.6 cm x 27.9 cm)</option>
+            <option>A4 (21.0 cm x 29.7 cm)</option>
+            <option>Legal (21.6 cm x 35.6 cm)</option>
+            <option>A3 (29.7 cm x 42.0 cm)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">Page Colour</span>
+          <button class="color-swatch-btn" aria-label="Choose page colour"></button>
+        </div>
+      </div>
+
+      <div>
+        <span class="field-label">Margins <span class="unit">(centimetres)</span></span>
+
+        <div class="margin-row">
+          <label for="mTop">Top</label>
+          <input type="text" id="mTop" value="2.54">
+        </div>
+        <div class="margin-row">
+          <label for="mBottom">Bottom</label>
+          <input type="text" id="mBottom" value="2.54">
+        </div>
+        <div class="margin-row">
+          <label for="mLeft">Left</label>
+          <input type="text" id="mLeft" value="2.54">
+        </div>
+        <div class="margin-row">
+          <label for="mRight">Right</label>
+          <input type="text" id="mRight" value="2.54">
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-footer">
+      <div class="footer-left">
+        <button class="primary">OK</button>
+        <button class="secondary">Cancel</button>
+      </div>
+      <button class="link-btn">Set as default</button>
+    </div>
+  </div>
+
+</body>
+</html>
