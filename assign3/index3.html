@@ -1,0 +1,31 @@
+<!-- import java.util.Scanner;
+public class Factorial {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        long fact = 1;
+        for(int i=1; i<=n; i++) fact *= i;
+        System.out.println("Factorial is: " + fact);
+    }
+} -->
+
+<!DOCTYPE html>
+<html>
+<head><title>JS Factorial Calculator</title></head>
+<body style="font-family: sans-serif; text-align: center; padding: 50px;">
+    <h2>Factorial Calculator</h2>
+    <input type="number" id="num" placeholder="Enter a number">
+    <button onclick="calculateFact()">Calculate</button>
+    <h3 id="result"></h3>
+
+    <script>
+        function calculateFact() {
+            let n = document.getElementById("num").value;
+            if (n < 0 || n === "") return alert("Enter a valid positive number");
+            let fact = 1;
+            for(let i = 1; i <= n; i++) fact *= i;
+            document.getElementById("result").innerText = "Factorial is: " + fact;
+        }
+    </script>
+</body>
+</html>

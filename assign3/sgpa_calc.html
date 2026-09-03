@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPA Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+            background-color: #f4f4f9;
+        }
+        .calculator {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 350px; text-align: center;
+        }
+        input {
+            width: calc(100% - 20px); padding: 8px; margin: 8px 0;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button {
+            width: 100%; padding: 10px; background-color: #333; color: white;
+            border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px;
+        }
+        button:hover { background-color: #555; }
+        .result-box { margin-top: 20px; font-weight: bold; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h2>SGPA Calculator</h2>
+        <p>Enter marks (0-100) for 4 subjects:</p>
+        <input type="number" id="sub1" placeholder="Subject 1 Marks">
+        <input type="number" id="sub2" placeholder="Subject 2 Marks">
+        <input type="number" id="sub3" placeholder="Subject 3 Marks">
+        <input type="number" id="sub4" placeholder="Subject 4 Marks">
+        
+        <button onclick="calculateSGPA()">Calculate Result</button>
+
+        <div id="resultOutput" class="result-box"></div>
+    </div>
+
+    <script>
+        function getGradePoint(marks) {
+            if (marks >= 90) return { gp: 10, letter: 'A+' };
+            if (marks >= 80) return { gp: 9, letter: 'A' };
+            if (marks >= 70) return { gp: 8, letter: 'B' };
+            if (marks >= 60) return { gp: 7, letter: 'C' };
+            if (marks >= 50) return { gp: 6, letter: 'D' };
+            if (marks >= 40) return { gp: 5, letter: 'E' };
+            return { gp: 0, letter: 'F' };
+        }
+
+        function calculateSGPA() {
+            // Retrieve values
+            let marks = [
+                parseInt(document.getElementById('sub1').value),
+                parseInt(document.getElementById('sub2').value),
+                parseInt(document.getElementById('sub3').value),
+                parseInt(document.getElementById('sub4').value)
+            ];
+
+            // 1. Check for simple errors
+            for (let i = 0; i < marks.length; i++) {
+                if (isNaN(marks[i]) || marks[i] < 0 || marks[i] > 100) {
+                    alert("Error: Marks for Subject " + (i+1) + " must be between 0 and 100.");
+                    return;
+                }
+            }
+
+            // 2. Calculate Total, Percentage, and SGPA
+            let totalMarks = 0;
+            let totalGradePoints = 0;
+            let resultHTML = "<ul>";
+            let hasFailed = false;
+
+            for (let i = 0; i < marks.length; i++) {
+                let gradeInfo = getGradePoint(marks[i]);
+                totalMarks += marks[i];
+                totalGradePoints += gradeInfo.gp;
+                resultHTML += `<li>Sub ${i+1}: ${marks[i]} marks - Grade: ${gradeInfo.letter}</li>`;
+                
+                if (gradeInfo.gp === 0) hasFailed = true;
+            }
+
+            let percentage = (totalMarks / 400) * 100;
+            let sgpa = totalGradePoints / 4; // Assuming equal credits
+
+            resultHTML += "</ul>";
+            resultHTML += `<p>Total Marks: ${totalMarks} / 400</p>`;
+            resultHTML += `<p>Percentage: ${percentage.toFixed(2)}%</p>`;
+            resultHTML += `<h3>Final SGPA: ${sgpa.toFixed(2)}</h3>`;
+
+            document.getElementById('resultOutput').innerHTML = resultHTML;
+
+            // 4. Change background color dynamically
+            if (hasFailed) {
+                document.body.style.backgroundColor = "#ffcccc"; // Red for Fail
+                document.body.style.color = "#900000";
+            } else if (sgpa >= 8.0) {
+                document.body.style.backgroundColor = "#cce5ff"; // Blue for Distinction
+                document.body.style.color = "#004085";
+            } else {
+                document.body.style.backgroundColor = "#d4edda"; // Green for Pass
+                document.body.style.color = "#155724";
+            }
+        }
+    </script>
+</body>
+</html>
