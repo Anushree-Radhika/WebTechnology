@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CST Department Faculty - IIEST</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #ecf0f1;
+            --accent-color: #3498db;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--secondary-color);
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px; width: 300px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px; background-color: var(--accent-color);
+            color: white; border: none; border-radius: 4px; cursor: pointer;
+        }
+        button:hover { background-color: #2980b9; }
+        
+        .profile-card {
+            background: white; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 400px; padding: 20px; text-align: center;
+            display: none; /* Hidden until search */
+        }
+        .profile-pic {
+            width: 150px; height: 150px; border-radius: 50%;
+            object-fit: cover; border: 3px solid var(--primary-color);
+        }
+        .error { color: red; font-weight: bold; }
+        .details { text-align: left; margin-top: 15px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h2>Faculty Directory</h2>
+        <input type="text" id="searchInput" placeholder="Enter Faculty Name (e.g., John)">
+        <button onclick="searchFaculty()">Search</button>
+    </div>
+
+    <div id="profile" class="profile-card">
+        <img id="f-photo" class="profile-pic" src="" alt="Faculty Photo">
+        <h3 id="f-name"></h3>
+        <div class="details">
+            <p><strong>Email:</strong> <span id="f-email"></span></p>
+            <p><strong>Highest Qualification:</strong> <span id="f-qual"></span></p>
+            <p><strong>Subjects (Current Sem):</strong> <span id="f-subj"></span></p>
+            <p><strong>Research Areas:</strong> <span id="f-research"></span></p>
+        </div>
+    </div>
+    <p id="error-msg" class="error"></p>
+    <script>
+        const facultyDB = [{
+            name: "Dr. Abhik Mukherjee",
+            photo: "Abhik.jpg",
+            email: "abhik@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Computer control of industrial processes (BE)",
+            research: "Signal and Systems, Design and Analysis of Algorithms"
+        },
+        {
+            name: "Dr. Amit Biswas",
+            photo: "amit.jpg",
+            email: "amitbiswas@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Design and Analysis of Algorithms",
+            research: "Distributed Systems, Cloud Computing"
+        },
+        {
+            name: "Dr. Apurba Sarkar",
+            photo: "amit.jpg",
+            email: "apurba@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Design and Analysis of Algorithms",
+            research: "Digital Geometry, Discrete and Combinatorial Geometry, Text Summarization, Image Processing"
+        },
+        {
+            name: "Dr. Ashish Kumar Layek",
+            photo: "ashish.jpg",
+            email: "ashish@cs.iiests.ac.in",
+            qualification: "M.E. in Computer Science and Technology",
+            subjects: "Computer Networks",
+            research: "Wireless Networks, Mobile Computing, Pattern Recognition, Image Processing"
+        },
+        {
+            name: "Dr. Asit Kumar Das",
+            photo: "asit.jpg",
+            email: "akdas@cs.iiests.ac.in",
+            qualification: "Ph.D. in Computer Science and Technology",
+            subjects: "Data Structures and Algorithms",
+            research: "Data Mining, Pattern Recognition, Social Networks, Bioinformatics, Machine Learning, Soft Computing, Text, Audio and Video Data Analysis"
+        },
+        {
+            name: "Dr. Biplab K. Sikdar",
+            photo: "biplab.jpg",
+            email: "biplab@cs.iiests.ac.in",
+            qualification: "Ph.D. in Computer Science and Engineering",
+            subjects: "Computer Architecture",
+            research: "Cellular Automata, Computer Architecture, VLSI Testing, Built-In Self-Test, Pattern Recognition"
+        },
+        {
+            name: "Dr. Jaya Sil",
+            photo: "jaya.jpg",
+            email: "js@cs.iiests.ac.in",
+            qualification: "Ph.D. in Computer Science",
+            subjects: "Artificial Intelligence",
+            research: "Artificial Intelligence, Soft Computing, Image Processing, Computer Vision, Machine Learning, Bioinformatics"
+        },
+        {
+            name: "Dr. Malay Kule",
+            photo: "malay.jpg",
+            email: "malay@cs.iiests.ac.in",
+            qualification: "M.Tech. in Computer Science and Engineering",
+            subjects: "Information Security and Cryptography",
+            research: "Defect Tolerance of Nanoscale Crossbar Circuits, Cryptology"
+        },
+        {
+            name: "Dr. Manas Hira",
+            photo: "manas.jpg",
+            email: "manas@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Microprocessor",
+            research: "Circuit Verification using Temporal Logic"
+        },
+        {
+            name: "Dr. Nirnay Ghosh",
+            photo: "amit.jpg",
+            email: "nirnay@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Graph Theory",
+            research: "Internet of Things (IoT), Blockchain and its Applications"
+        },
+        {
+            name: "Dr. Samit Biswas",
+            photo: "Samit.jpg",
+            email: "samit@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Theory of Computation",
+            research: "Digital Image Processing and Analysis, Data Mining and Pattern Recognition"
+        },
+        {
+            name: "Dr. Sekhar Mandal",
+            photo: "sekhar.jpg",
+            email: "sekhar@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Digital Logic",
+            research: "Machine Learning, Pattern Recognition"
+        },
+        {
+            name: "Dr. Sipra Das Bit",
+            photo: "sipra.jpg",
+            email: "sb@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Database Management",
+            research: "IoT and its Usage in Industrial Informatics, Wireless Sensor Network"
+        },
+        {
+            name: "Dr. Soumen Moulik",
+            photo: "Soumen.jpg",
+            email: "soumen@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Computer Networks",
+            research: "IoT in Healthcare, LR-WPANs (IEEE 802.15.4)"
+        },
+        {
+            name: "Dr. Sulata Mitra",
+            photo: "sulata.jpg",
+            email: "sulata@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Computer Organization and Architecture",
+            research: "Disaster Management, Multihomed Mobile Network"
+        },
+        {
+            name: "Dr. Surajeet Ghosh",
+            photo: "Surajeet.jpg",
+            email: "surajeet@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Hardware",
+            research: "Hardware Accelerators, Machine Learning for Embedded Systems"
+        },
+        {
+            name: "Dr. TAMAL PAL",
+            photo: "tamalpalsir.jpg",
+            email: "tamal@cs.iiests.ac.in",
+            qualification: "PhD",
+            subjects: "Discrete Mathematics",
+            research: "Games Programming, AIML (Artificial Intelligence and Machine Learning)"
+        }];
+        function searchFaculty() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let card = document.getElementById('profile');
+            let errorMsg = document.getElementById('error-msg');
+            // Find faculty by matching substring
+            let faculty = facultyDB.find(f => f.name.toLowerCase().includes(input));
+
+            if (faculty && input.trim() !== "") {
+                document.getElementById('f-name').innerText = faculty.name;
+                document.getElementById('f-photo').src = faculty.photo;
+                document.getElementById('f-email').innerText = faculty.email;
+                document.getElementById('f-qual').innerText = faculty.qualification;
+                document.getElementById('f-subj').innerText = faculty.subjects;
+                document.getElementById('f-research').innerText = faculty.research;  
+                card.style.display = "block";
+                errorMsg.innerText = "";
+            } else {
+                card.style.display = "none";
+                errorMsg.innerText = "Faculty not found. Please try another name.";
+            }
+        }
+    </script>
+</body>
+</html>
