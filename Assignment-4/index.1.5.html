@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Form</title>
+</head>
+<body>
+    <h2>Student Feedback Form</h2>
+    <form action="index.1.5.php" method="post" enctype="multipart/form-data">
+        
+        <!-- Textbox -->
+        Username: <input type="text" name="username"><br><br>
+        
+        <!-- Password -->
+        Password: <input type="password" name="password"><br><br>
+        
+        <!-- Option Button (Radio Button) -->
+        Gender: 
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+        <br><br>
+        
+        <!-- List Box (Select Dropdown) -->
+        Course: 
+        <select name="course">
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+        </select><br><br>
+        
+        <!-- File Upload -->
+        Upload Resume: <input type="file" name="resume"><br><br>
+        
+        <!-- Hidden Element -->
+        <input type="hidden" name="session_token" value="abc123xyz890">
+        
+        <input type="submit" value="Submit Form">
+    </form>
+</body>
+</html>
